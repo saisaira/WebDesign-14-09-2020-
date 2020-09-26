@@ -1,26 +1,47 @@
 // XMLHttpRequest(AJAX Call)
 
-function getJson(file,callback){
-var xhr_req=new XMLHttpRequest();
-xhr_req.overrideMimeType("application/json");
-xhr_req.open("GET",file,true);
-xhr_req.onreadystatechange=function(){
-	if(xhr_req.readyState===4 && xhr_req.status===200){
-      callback(xhr_req.responseText);
-	}
-}
-xhr_req.send();
-}
+// var getJson=(file,callback)=>{
+// var xhr_req=new XMLHttpRequest();
+// xhr_req.overrideMimeType("application/json");
+// xhr_req.open("GET",file,true);
+// xhr_req.onreadystatechange=()=>{
+// 	if(xhr_req.readyState===4 && xhr_req.status===200){
+//       callback(xhr_req.responseText);
+// 	}
+// }
+// xhr_req.send();
+// }
 
 // passing data to function
 
-getJson("./Data/dynamicdata.json",function(text){
-var d=JSON.parse(text);
-console.log(d);
-t_details(d.details);
-d_trainers(d.trainers);
-d_trainees(d.trainees);
+// getJson("./Data/dynamicdata.json",(text)=>{
+// var d=JSON.parse(text);
+// console.log(d);
+// t_details(d.details);
+// d_trainers(d.trainers);
+// d_trainees(d.trainees);
+// })
+
+// fetch and promises api
+var getJson=(file)=>{
+	return new Promise((resolve,reject)=>{
+		return fetch(file).then(response=>{
+			if(response.ok){
+				resolve(response.json());
+			}else{
+				reject(new Error("error"))
+			}
+		})
+	})
+}
+
+getJson("./Data/dynamicdata.json").then(d=>{
+	console.log(d);
+	t_details(d.details);
+    d_trainers(d.trainers);
+    d_trainees(d.trainees);
 })
+
 
 var main=document.querySelector("#parent-div");
 var child=document.createElement("div");
@@ -30,7 +51,7 @@ h1.textContent="Details of training program";
 child.appendChild(h1);
 main.appendChild(child);
 
-function t_details(a){
+var t_details=(a)=>{
 var image=document.createElement("img");
 image.src=a.image;
 image.alt="apssdc-image";
@@ -60,7 +81,7 @@ for (var i = 0; i < a.content.length; i++) {
 child.appendChild(ul);
 }
 
-function d_trainers(r){
+var d_trainers=(r)=>{
 var child=document.createElement("div");
 child.classList.add("child");
 var h1=document.createElement("h1");
@@ -85,7 +106,7 @@ main.appendChild(child);
   }
 }
 
-function d_trainees(clg){
+var d_trainees=(clg)=>{
 var child=document.createElement("div");
 child.classList.add("child");
 var h1=document.createElement("h1");
