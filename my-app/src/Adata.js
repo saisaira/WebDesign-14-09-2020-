@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import Jdata from './Jdata';
+
 
 export default class Adata extends Component{
 	render(){

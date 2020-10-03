@@ -1,4 +1,13 @@
+.parent{
+  display: flex;
+  justify-content: space-between;
+}
 
+.child{
+  border: 2px solid #000;
+  width: 400px;
+  text-align: center;
+}
 .Skill{
   background-color: #999;
   text-align: center;
